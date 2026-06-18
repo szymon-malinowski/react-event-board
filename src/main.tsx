@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { ClerkProvider } from "@clerk/react";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
@@ -17,11 +18,20 @@ declare module "@tanstack/react-router" {
 
 // Render the app
 const rootElement = document.getElementById("root")!;
+const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+if (!publishableKey) {
+  throw new Error(
+    "Missing Publishable Key: set VITE_CLERK_PUBLISHABLE_KEY in your .env",
+  );
+}
+
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <RouterProvider router={router} />
+      <ClerkProvider publishableKey={publishableKey}>
+        <RouterProvider router={router} />
+      </ClerkProvider>
     </StrictMode>,
   );
 }
