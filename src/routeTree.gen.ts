@@ -14,6 +14,12 @@ import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as PublicAboutRouteImport } from './routes/_public/about'
 import { Route as ProtectedDashboardRouteRouteImport } from './routes/_protected/dashboard/route'
 import { Route as ProtectedDashboardIndexRouteImport } from './routes/_protected/dashboard/index'
+import { Route as ProtectedDashboardCalendarRouteImport } from './routes/_protected/dashboard/calendar'
+import { Route as ProtectedDashboardEventsRouteRouteImport } from './routes/_protected/dashboard/events/route'
+import { Route as ProtectedDashboardEventsIndexRouteImport } from './routes/_protected/dashboard/events/index'
+import { Route as ProtectedDashboardEventsNewRouteImport } from './routes/_protected/dashboard/events/new'
+import { Route as ProtectedDashboardEventsEventIdRouteImport } from './routes/_protected/dashboard/events/$eventId'
+import { Route as ProtectedDashboardEventsEventIdEditRouteImport } from './routes/_protected/dashboard/events/$eventId.edit'
 
 const PublicRouteRoute = PublicRouteRouteImport.update({
   id: '/_public',
@@ -39,17 +45,64 @@ const ProtectedDashboardIndexRoute = ProtectedDashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ProtectedDashboardRouteRoute,
 } as any)
+const ProtectedDashboardCalendarRoute =
+  ProtectedDashboardCalendarRouteImport.update({
+    id: '/calendar',
+    path: '/calendar',
+    getParentRoute: () => ProtectedDashboardRouteRoute,
+  } as any)
+const ProtectedDashboardEventsRouteRoute =
+  ProtectedDashboardEventsRouteRouteImport.update({
+    id: '/events',
+    path: '/events',
+    getParentRoute: () => ProtectedDashboardRouteRoute,
+  } as any)
+const ProtectedDashboardEventsIndexRoute =
+  ProtectedDashboardEventsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => ProtectedDashboardEventsRouteRoute,
+  } as any)
+const ProtectedDashboardEventsNewRoute =
+  ProtectedDashboardEventsNewRouteImport.update({
+    id: '/new',
+    path: '/new',
+    getParentRoute: () => ProtectedDashboardEventsRouteRoute,
+  } as any)
+const ProtectedDashboardEventsEventIdRoute =
+  ProtectedDashboardEventsEventIdRouteImport.update({
+    id: '/$eventId',
+    path: '/$eventId',
+    getParentRoute: () => ProtectedDashboardEventsRouteRoute,
+  } as any)
+const ProtectedDashboardEventsEventIdEditRoute =
+  ProtectedDashboardEventsEventIdEditRouteImport.update({
+    id: '/edit',
+    path: '/edit',
+    getParentRoute: () => ProtectedDashboardEventsEventIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
   '/dashboard': typeof ProtectedDashboardRouteRouteWithChildren
   '/about': typeof PublicAboutRoute
+  '/dashboard/events': typeof ProtectedDashboardEventsRouteRouteWithChildren
+  '/dashboard/calendar': typeof ProtectedDashboardCalendarRoute
   '/dashboard/': typeof ProtectedDashboardIndexRoute
+  '/dashboard/events/$eventId': typeof ProtectedDashboardEventsEventIdRouteWithChildren
+  '/dashboard/events/new': typeof ProtectedDashboardEventsNewRoute
+  '/dashboard/events/': typeof ProtectedDashboardEventsIndexRoute
+  '/dashboard/events/$eventId/edit': typeof ProtectedDashboardEventsEventIdEditRoute
 }
 export interface FileRoutesByTo {
   '/about': typeof PublicAboutRoute
   '/': typeof PublicIndexRoute
+  '/dashboard/calendar': typeof ProtectedDashboardCalendarRoute
   '/dashboard': typeof ProtectedDashboardIndexRoute
+  '/dashboard/events/$eventId': typeof ProtectedDashboardEventsEventIdRouteWithChildren
+  '/dashboard/events/new': typeof ProtectedDashboardEventsNewRoute
+  '/dashboard/events': typeof ProtectedDashboardEventsIndexRoute
+  '/dashboard/events/$eventId/edit': typeof ProtectedDashboardEventsEventIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -57,20 +110,50 @@ export interface FileRoutesById {
   '/_protected/dashboard': typeof ProtectedDashboardRouteRouteWithChildren
   '/_public/about': typeof PublicAboutRoute
   '/_public/': typeof PublicIndexRoute
+  '/_protected/dashboard/events': typeof ProtectedDashboardEventsRouteRouteWithChildren
+  '/_protected/dashboard/calendar': typeof ProtectedDashboardCalendarRoute
   '/_protected/dashboard/': typeof ProtectedDashboardIndexRoute
+  '/_protected/dashboard/events/$eventId': typeof ProtectedDashboardEventsEventIdRouteWithChildren
+  '/_protected/dashboard/events/new': typeof ProtectedDashboardEventsNewRoute
+  '/_protected/dashboard/events/': typeof ProtectedDashboardEventsIndexRoute
+  '/_protected/dashboard/events/$eventId/edit': typeof ProtectedDashboardEventsEventIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/about' | '/dashboard/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/about'
+    | '/dashboard/events'
+    | '/dashboard/calendar'
+    | '/dashboard/'
+    | '/dashboard/events/$eventId'
+    | '/dashboard/events/new'
+    | '/dashboard/events/'
+    | '/dashboard/events/$eventId/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/about' | '/' | '/dashboard'
+  to:
+    | '/about'
+    | '/'
+    | '/dashboard/calendar'
+    | '/dashboard'
+    | '/dashboard/events/$eventId'
+    | '/dashboard/events/new'
+    | '/dashboard/events'
+    | '/dashboard/events/$eventId/edit'
   id:
     | '__root__'
     | '/_public'
     | '/_protected/dashboard'
     | '/_public/about'
     | '/_public/'
+    | '/_protected/dashboard/events'
+    | '/_protected/dashboard/calendar'
     | '/_protected/dashboard/'
+    | '/_protected/dashboard/events/$eventId'
+    | '/_protected/dashboard/events/new'
+    | '/_protected/dashboard/events/'
+    | '/_protected/dashboard/events/$eventId/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -115,6 +198,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedDashboardIndexRouteImport
       parentRoute: typeof ProtectedDashboardRouteRoute
     }
+    '/_protected/dashboard/calendar': {
+      id: '/_protected/dashboard/calendar'
+      path: '/calendar'
+      fullPath: '/dashboard/calendar'
+      preLoaderRoute: typeof ProtectedDashboardCalendarRouteImport
+      parentRoute: typeof ProtectedDashboardRouteRoute
+    }
+    '/_protected/dashboard/events': {
+      id: '/_protected/dashboard/events'
+      path: '/events'
+      fullPath: '/dashboard/events'
+      preLoaderRoute: typeof ProtectedDashboardEventsRouteRouteImport
+      parentRoute: typeof ProtectedDashboardRouteRoute
+    }
+    '/_protected/dashboard/events/': {
+      id: '/_protected/dashboard/events/'
+      path: '/'
+      fullPath: '/dashboard/events/'
+      preLoaderRoute: typeof ProtectedDashboardEventsIndexRouteImport
+      parentRoute: typeof ProtectedDashboardEventsRouteRoute
+    }
+    '/_protected/dashboard/events/new': {
+      id: '/_protected/dashboard/events/new'
+      path: '/new'
+      fullPath: '/dashboard/events/new'
+      preLoaderRoute: typeof ProtectedDashboardEventsNewRouteImport
+      parentRoute: typeof ProtectedDashboardEventsRouteRoute
+    }
+    '/_protected/dashboard/events/$eventId': {
+      id: '/_protected/dashboard/events/$eventId'
+      path: '/$eventId'
+      fullPath: '/dashboard/events/$eventId'
+      preLoaderRoute: typeof ProtectedDashboardEventsEventIdRouteImport
+      parentRoute: typeof ProtectedDashboardEventsRouteRoute
+    }
+    '/_protected/dashboard/events/$eventId/edit': {
+      id: '/_protected/dashboard/events/$eventId/edit'
+      path: '/edit'
+      fullPath: '/dashboard/events/$eventId/edit'
+      preLoaderRoute: typeof ProtectedDashboardEventsEventIdEditRouteImport
+      parentRoute: typeof ProtectedDashboardEventsEventIdRoute
+    }
   }
 }
 
@@ -132,12 +257,51 @@ const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(
   PublicRouteRouteChildren,
 )
 
+interface ProtectedDashboardEventsEventIdRouteChildren {
+  ProtectedDashboardEventsEventIdEditRoute: typeof ProtectedDashboardEventsEventIdEditRoute
+}
+
+const ProtectedDashboardEventsEventIdRouteChildren: ProtectedDashboardEventsEventIdRouteChildren =
+  {
+    ProtectedDashboardEventsEventIdEditRoute:
+      ProtectedDashboardEventsEventIdEditRoute,
+  }
+
+const ProtectedDashboardEventsEventIdRouteWithChildren =
+  ProtectedDashboardEventsEventIdRoute._addFileChildren(
+    ProtectedDashboardEventsEventIdRouteChildren,
+  )
+
+interface ProtectedDashboardEventsRouteRouteChildren {
+  ProtectedDashboardEventsEventIdRoute: typeof ProtectedDashboardEventsEventIdRouteWithChildren
+  ProtectedDashboardEventsNewRoute: typeof ProtectedDashboardEventsNewRoute
+  ProtectedDashboardEventsIndexRoute: typeof ProtectedDashboardEventsIndexRoute
+}
+
+const ProtectedDashboardEventsRouteRouteChildren: ProtectedDashboardEventsRouteRouteChildren =
+  {
+    ProtectedDashboardEventsEventIdRoute:
+      ProtectedDashboardEventsEventIdRouteWithChildren,
+    ProtectedDashboardEventsNewRoute: ProtectedDashboardEventsNewRoute,
+    ProtectedDashboardEventsIndexRoute: ProtectedDashboardEventsIndexRoute,
+  }
+
+const ProtectedDashboardEventsRouteRouteWithChildren =
+  ProtectedDashboardEventsRouteRoute._addFileChildren(
+    ProtectedDashboardEventsRouteRouteChildren,
+  )
+
 interface ProtectedDashboardRouteRouteChildren {
+  ProtectedDashboardEventsRouteRoute: typeof ProtectedDashboardEventsRouteRouteWithChildren
+  ProtectedDashboardCalendarRoute: typeof ProtectedDashboardCalendarRoute
   ProtectedDashboardIndexRoute: typeof ProtectedDashboardIndexRoute
 }
 
 const ProtectedDashboardRouteRouteChildren: ProtectedDashboardRouteRouteChildren =
   {
+    ProtectedDashboardEventsRouteRoute:
+      ProtectedDashboardEventsRouteRouteWithChildren,
+    ProtectedDashboardCalendarRoute: ProtectedDashboardCalendarRoute,
     ProtectedDashboardIndexRoute: ProtectedDashboardIndexRoute,
   }
 
