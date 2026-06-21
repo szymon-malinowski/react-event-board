@@ -7,7 +7,16 @@ export default function Navbar() {
         <div className="p-2 flex gap-2">
           <Link to="/" className="[&.active]:font-bold">
             Home
-          </Link>{" "}
+          </Link>
+          <Link to="/dashboard" className="[&.active]:font-bold">
+            Dashboard
+          </Link>
+          <Link to="/dashboard/events" className="[&.active]:font-bold">
+            Events
+          </Link>
+          <Link to="/dashboard/calendar" className="[&.active]:font-bold">
+            Calendar
+          </Link>
           <Link to="/about" className="[&.active]:font-bold">
             About
           </Link>
