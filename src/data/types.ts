@@ -1,14 +1,19 @@
-type EventStatus = "draft" | "published" | "cancelled" | "completed";
+export type EventStatus = "draft" | "published" | "cancelled" | "completed";
 
-type EventCategory = "workshop" | "talk" | "networking" | "review" | "other";
+export type EventCategory =
+  | "workshop"
+  | "talk"
+  | "networking"
+  | "review"
+  | "other";
 
-type Attendee = {
+export type Attendee = {
   id: string;
   name: string;
   email: string;
 };
 
-type Event = {
+export type Event = {
   id: string;
   title: string;
   description: string;
@@ -20,4 +25,9 @@ type Event = {
   maxAttendees: number;
   attendees: Attendee[];
   createdAt: string;
+};
+
+export type TCard = {
+  title: string;
+  description: string;
 };
