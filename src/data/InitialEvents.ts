@@ -1,4 +1,6 @@
-export const initialEvents = [
+import type { Event } from "./types";
+
+export const initialEvents: Event[] = [
   {
     id: "react-workshop",
     title: "React Basics Workshop",

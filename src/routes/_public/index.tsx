@@ -1,4 +1,4 @@
-import Hero from "../../components/organisms/Hero";
+import HeroSection from "../../components/organisms/HeroSection";
 import "../../index.css";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_public/")({
 function RouteComponent() {
   return (
     <>
-      <Hero />
+      <HeroSection />
     </>
   );
 }
