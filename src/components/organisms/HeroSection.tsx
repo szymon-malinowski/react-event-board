@@ -1,4 +1,4 @@
-export default function Hero() {
+export default function HeroSection() {
   return (
     <>
       <div className="hero bg-base-200 min-h-screen">
