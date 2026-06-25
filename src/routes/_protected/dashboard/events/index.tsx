@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { initialEvents } from "../../../../data/InitialEvents";
 import EventCard from "../../../../components/molecules/EventCard";
 
@@ -11,20 +11,24 @@ function RouteComponent() {
     <>
       <div className="flex flex-wrap gap-4">
         {initialEvents.map((item) => (
-          <EventCard
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            description={item.description}
-            date={item.date}
-            time={item.time}
-            location={item.location}
-            category={item.category}
-            status={item.status}
-            maxAttendees={item.maxAttendees}
-            attendees={item.attendees}
-            createdAt={item.createdAt}
-          />
+          <div key={item.id} className="flex flex-col">
+            <EventCard
+              id={item.id}
+              title={item.title}
+              description={item.description}
+              date={item.date}
+              time={item.time}
+              location={item.location}
+              category={item.category}
+              status={item.status}
+              maxAttendees={item.maxAttendees}
+              attendees={item.attendees}
+              createdAt={item.createdAt}
+            />
+            <Link to="/dashboard/events/$eventId" params={{ eventId: item.id }}>
+              Details
+            </Link>
+          </div>
         ))}
       </div>
     </>

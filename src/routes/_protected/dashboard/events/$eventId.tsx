@@ -1,9 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/_protected/dashboard/events/$eventId')({
+export const Route = createFileRoute("/_protected/dashboard/events/$eventId")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <div>Hello "/_protected/dashboard/events/$eventId"!</div>
+  const { eventId } = Route.useParams();
+  return <div> {eventId}</div>;
 }
